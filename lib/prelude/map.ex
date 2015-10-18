@@ -9,13 +9,13 @@ defmodule Prelude.Map do
 
   For example:
 
-      iex> group_by(
+      iex> Prelude.Map.group_by(
       ...>  [%{name: "stian", group: 1, cat: 2},
       ...>   %{name: "per",   group: 1, cat: 1}],
       ...>  [:group, :cat])
       %{1 =>
-        %{1 => %{cat: 1, group: 1, name: "per"},
-          2 => %{cat: 2, group: 1, name: "stian"}}}
+        %{1 => [%{cat: 1, group: 1, name: "per"}],
+          2 => [%{cat: 2, group: 1, name: "stian"}] } }
   """
   def group_by(maps, groups) when is_list(maps) and is_list(groups) do
     Enum.reduce(maps, %{}, fn x, acc ->
@@ -35,10 +35,10 @@ defmodule Prelude.Map do
 
   For example:
 
-      iex> map_deep_put(%{}, [:a, :b, :c], "0")
+      iex> Prelude.Map.deep_put(%{}, [:a, :b, :c], "0")
       %{a: %{b: %{c: "0"}}}
 
-      iex> map_deep_put(%{a: %{b: %{c: "1"}}}, [:a, :b, :c, :d], "2")
+      iex> Prelude.Map.deep_put(%{a: %{b: %{c: "1"}}}, [:a, :b, :c, :d], "2")
       %{a: %{b: %{c: [{:d, "2"}, "1"]}}}
   """
   def deep_put(map, path, val) do
@@ -62,8 +62,8 @@ defmodule Prelude.Map do
 
   For example:
 
-      iex> a = {a: %{b: %{c: %{d: 1, e: 1}}}}
-      ...> del_in(a, [:a, :b, :c], :d)
+      iex> a = %{a: %{b: %{c: %{d: 1, e: 1}}}}
+      ...> Prelude.Map.del_in(a, [:a, :b, :c], :d)
       %{a: %{b: %{c: %{e: 1}}}}
   """
   def del_in(object, path, item) do
